@@ -16,9 +16,9 @@ typedef struct bunarr {
 
 } bunarr;
 
-/** \brief creates an dynamic array with the given item_size , initial capacity 
+/** \brief creates an dynamic array with the given item_size, initial capacity and a callback function to free your items. 
  * \param isize The size in bytes of each item,
- * \param cap The initial capacity of the array
+ * \param cap The initial capacity of the array,
  * \param free_fn An optional function used to properly free items with malloc'ed memory when they are removed from the array.
  * \sa bunarr_create_ex */
 bunarr *bunarr_create(usize isize, usize cap,

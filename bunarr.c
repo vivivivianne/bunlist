@@ -231,7 +231,7 @@ static void bunarr_resize(bunarr *arr, usize newcap)
 static bool bunarr_chk_index(bunarr *arr, usize i)
 {
 	if (i > arr->len) {
-		fprintf(stderr, "\n Invalid Index %lu", i);
+		fprintf(stderr, "\nInvalid Index %lu", i);
 		return false;
 	} else
 		return true;
