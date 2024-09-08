@@ -14,7 +14,8 @@
 
 - Not made with double pointers in mind, might not work.
 - it also requires buntypes.h which is what i personally use for types.
-
+- The current insert implementation does not allow inserting things that are outside of the array length.
+This means you should use insert only to insert between things that are already in the list.
 
 ## 🗒️ Todo:
 - Clear reduntant code into less functions
