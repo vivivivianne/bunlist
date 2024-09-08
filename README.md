@@ -20,6 +20,7 @@ This means you should use insert only to insert between things that are already 
 ## 🗒️ Todo:
 - Consider improving inserting functionality
 - Proper error handling
+- Generate docs with doxygen????
 
 ## 💾 Usage:
 See examples in [tests.c](tests.c)
