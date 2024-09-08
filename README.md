@@ -1,14 +1,14 @@
-# 🐇BunArr - A simple c99 dynamic array implementation
-
+# 🐇BunArr
+A simple c99 dynamic array implementation
 
 ## ✅ Features and Usage:
-- The code is overly commented with the usage explained in it.
+
+- The header file is overly commented with the usage explained in it.
 - Set a initial capacity to avoid unnecessary memory reallocations.
 - Control array growth once it reaches max size (linear and geometric progression).
-- use bunarr_exe() to run a function on all the items of the array.
-- bunarr_free() destroys the array.
-- to use simply copy the headers and bunarr.c
-
+- Use bunarr_exe() to run a function on all the items of the array.
+- bunarr_free() destroys the array, and calls callback function in each item if one is defined.
+- To use simply copy the headers and bunarr.c
 
 ## ⚠️  Caveats:
 
@@ -18,4 +18,8 @@
 This means you should use insert only to insert between things that are already in the list.
 
 ## 🗒️ Todo:
-- Clear reduntant code into less functions
+- Consider improving inserting functionality
+- Proper error handling
+
+## 💾 Usage:
+See examples in [tests.c](tests.c)
