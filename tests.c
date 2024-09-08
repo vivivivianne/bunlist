@@ -4,7 +4,6 @@
 #include <time.h>
 
 static i32 xsort(const void *p1, const void *p2);
-static i32 ysort(const void *p1, const void *p2);
 static i32 pfind(const void *p1, const void *p2);
 static void printstuff(usize index, void *item);
 
@@ -108,11 +107,6 @@ int main(void)
 static i32 xsort(const void *p1, const void *p2)
 {
 	return ((point *)p1)->x - ((point *)p2)->x;
-}
-
-static i32 ysort(const void *p1, const void *p2)
-{
-	return ((point *)p1)->y - ((point *)p2)->y;
 }
 
 static i32 pfind(const void *p1, const void *p2)
