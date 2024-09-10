@@ -4,7 +4,7 @@
 #include "bunarr.h"
 
 static void bunarr_resize(bunarr *arr, usize newcap);
-static void bunarr_check_resize(bunarr *arr);
+static void bunarr_chk_resize(bunarr *arr);
 static bool bunarr_chk_index(bunarr *arr, usize i);
 
 bunarr *bunarr_create(usize isize, usize cap,
@@ -33,7 +33,7 @@ bunarr *bunarr_create_ex(usize isize, usize cap, u32 incr, bool mult,
 
 usize bunarr_append(bunarr *arr, void *item)
 {
-	bunarr_check_resize(arr);
+	bunarr_chk_resize(arr);
 
 	memcpy(arr->items + (arr->len * arr->isize), item, arr->isize);
 	arr->len++;
@@ -77,15 +77,15 @@ bool bunarr_remove_lazy(bunarr *arr, usize i)
 	u8 *end_ptr = (u8 *)arr->items + arr->len * arr->isize;
 	memcpy(item_ptr, end_ptr, arr->isize);
 
-	return 0;
+	return true;
 }
 
-usize bunarr_insert(bunarr *arr, void *item, usize i)
+bool bunarr_insert(bunarr *arr, void *item, usize i)
 {
 	if (!bunarr_chk_index(arr, i)) {
 		return false;
 	}
-	bunarr_check_resize(arr);
+	bunarr_chk_resize(arr);
 
 	u8 *dest = (arr->items + arr->isize * (i + 1));
 	u8 *src = (arr->items + arr->isize * (i));
@@ -94,12 +94,12 @@ usize bunarr_insert(bunarr *arr, void *item, usize i)
 	memcpy(dest, src, size);
 	memcpy(src, item, arr->isize);
 	arr->len++;
-	return i;
+	return true;
 }
 
-usize bunarr_insert_free(bunarr *arr, void *item, usize i)
+bool bunarr_insert_free(bunarr *arr, void *item, usize i)
 {
-	usize r = bunarr_insert(arr, item, i);
+	bool r = bunarr_insert(arr, item, i);
 	free(item);
 	return r;
 }
@@ -146,7 +146,7 @@ void bunarr_cpy(bunarr *dst_arr, bunarr *src_arr)
 	memcpy(dst_arr->items, src_arr->items, src_arr->isize * src_arr->len);
 }
 
-void *bunarr_clone(bunarr *src_arr)
+bunarr *bunarr_clone(bunarr *src_arr)
 {
 	bunarr *dst_arr = bunarr_create_ex(src_arr->isize, src_arr->cap,
 					   src_arr->incr, src_arr->mult, false,
@@ -199,8 +199,8 @@ bunarr *bunarr_subarr(bunarr *arr, usize start, usize end, bool clone)
 
 /** \brief Checks if the array has reached max capacity,
  * calculates a new capacity and 
- * resizes it accordingly to the settings*/
-static void bunarr_check_resize(bunarr *arr)
+ * resizes it accordingly to the settings */
+static void bunarr_chk_resize(bunarr *arr)
 {
 	if (arr->cap <= arr->len) {
 		if (arr->mult) {
