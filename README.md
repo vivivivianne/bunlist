@@ -1,5 +1,12 @@
-# 🐇BunArr
-A simple c99 dynamic array implementation
+<h1 align=center>🐇BunArr</h1> 
+<p align=center>A simple c99 dynamic array implementation</p>
+<div align=center>
+  
+  ![GitHub last commit](https://img.shields.io/github/last-commit/vivivivianne/bunarr?style=for-the-badge&labelColor=101418&color=9ccbfb)
+  ![GitHub Repo stars](https://img.shields.io/github/stars/vivivivianne/bunarr?style=for-the-badge&labelColor=101418&color=b9c8da)
+  ![GitHub repo size](https://img.shields.io/github/repo-size/vivivivianne/bunarr?style=for-the-badge&labelColor=101418&color=d3bfe6)
+
+</div>
 
 ## ✅ Features:
 
