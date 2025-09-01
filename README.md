@@ -13,10 +13,10 @@
 - Insert, Append, Remove, Get and more.
 - The header file is overly commented with the usage explained in it.
 - Set a initial capacity to avoid unnecessary memory reallocations.
-- Control array growth once it reaches max size (linear and geometric growth).
-- `bunlist_exe(arr, func)` runs a function on all items of the array.
-- `bunlist_free(arr)` destroys the array and calls callback function in each item if one is defined.
-- +Array cloning functions that allow copying an array or creating an array of pointers to another array.
+- Control list growth once it reaches max size (linear and geometric growth).
+- `bunlist_exe(arr, func)` runs a function on all items of the list.
+- `bunlist_free(arr)` destroys the list and calls callback function in each item if one is defined.
+- +list cloning functions that allow copying an list or creating an list of pointers to another list.
 
 ## 💾 Usage 
 
@@ -27,7 +27,7 @@
 
 - Not made with double pointers in mind, might not work.
 - it also requires buntypes.h which is what i personally use for types.
-- The current insert implementation does not allow inserting things that are outside of the array length.
+- The current insert implementation does not allow inserting things that are outside of the list length.
 This means you should use insert only to insert between things that are already in the list.
 
 ## 🗒️ Todo:
