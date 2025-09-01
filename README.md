@@ -1,10 +1,10 @@
-<h1 align=center>🐇BunArr</h1> 
-<p align=center>A simple c99 dynamic array implementation</p>
+<h1 align=center>🐇BunList</h1> 
+<p align=center>A simple c99 dynamic list implementation</p>
 <div align=center>
   
-  ![GitHub last commit](https://img.shields.io/github/last-commit/vivivivianne/bunarr?style=for-the-badge&labelColor=101418&color=9ccbfb)
-  ![GitHub Repo stars](https://img.shields.io/github/stars/vivivivianne/bunarr?style=for-the-badge&labelColor=101418&color=b9c8da)
-  ![GitHub repo size](https://img.shields.io/github/repo-size/vivivivianne/bunarr?style=for-the-badge&labelColor=101418&color=d3bfe6)
+  ![GitHub last commit](https://img.shields.io/github/last-commit/vivivivianne/bunlist?style=for-the-badge&labelColor=101418&color=9ccbfb)
+  ![GitHub Repo stars](https://img.shields.io/github/stars/vivivivianne/bunlist?style=for-the-badge&labelColor=101418&color=b9c8da)
+  ![GitHub repo size](https://img.shields.io/github/repo-size/vivivivianne/bunlist?style=for-the-badge&labelColor=101418&color=d3bfe6)
 
 </div>
 
@@ -14,13 +14,13 @@
 - The header file is overly commented with the usage explained in it.
 - Set a initial capacity to avoid unnecessary memory reallocations.
 - Control array growth once it reaches max size (linear and geometric growth).
-- `bunarr_exe(arr, func)` runs a function on all items of the array.
-- `bunarr_free(arr)` destroys the array and calls callback function in each item if one is defined.
+- `bunlist_exe(arr, func)` runs a function on all items of the array.
+- `bunlist_free(arr)` destroys the array and calls callback function in each item if one is defined.
 - +Array cloning functions that allow copying an array or creating an array of pointers to another array.
 
 ## 💾 Usage 
 
-- To add to your project simply copy the headers and bunarr.c
+- To add to your project simply copy the headers and bunlist.c
 - For examples see [tests.c](tests.c)
 
 ## ⚠️  Caveats:
