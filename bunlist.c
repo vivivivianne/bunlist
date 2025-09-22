@@ -3,19 +3,22 @@
 #include <string.h>
 #include "bunlist.h"
 
+#define DEFAULT_INCR 15
+#define DEFAULT_MULT false
+
 static void bunlist_resize(bunlist *arr, usize newcap);
 static void bunlist_chk_resize(bunlist *arr);
 static bool bunlist_chk_index(bunlist *arr, usize i);
 
 bunlist *bunlist_create(usize isize, usize cap,
-		      void (*free_fn)(usize i, void *data))
+			void (*free_fn)(usize i, void *data))
 {
-	return bunlist_create_ex(isize, cap, BARR_D_INCR, BARR_D_MULT, false,
-				free_fn);
+	return bunlist_create_ex(isize, cap, DEFAULT_INCR, DEFAULT_MULT, false,
+				 free_fn);
 }
 
 bunlist *bunlist_create_ex(usize isize, usize cap, u32 incr, bool mult,
-			 bool subarr, void (*free_fn)(usize i, void *data))
+			   bool subarr, void (*free_fn)(usize i, void *data))
 {
 	bunlist *arr = malloc(sizeof(bunlist));
 	arr->subarr = subarr;
@@ -149,8 +152,8 @@ void bunlist_cpy(bunlist *dst_arr, bunlist *src_arr)
 bunlist *bunlist_clone(bunlist *src_arr)
 {
 	bunlist *dst_arr = bunlist_create_ex(src_arr->isize, src_arr->cap,
-					   src_arr->incr, src_arr->mult, false,
-					   src_arr->free_fn);
+					     src_arr->incr, src_arr->mult,
+					     false, src_arr->free_fn);
 	bunlist_resize(dst_arr, dst_arr->cap);
 	memcpy(dst_arr->items, src_arr->items, src_arr->isize * src_arr->len);
 	return dst_arr;
@@ -170,7 +173,7 @@ void bunlist_qsort(bunlist *arr, i32 (*fn)(const void *, const void *))
 }
 
 void *bunlist_bsearch(bunlist *arr, void *key,
-		     i32 (*fn)(const void *, const void *))
+		      i32 (*fn)(const void *, const void *))
 {
 	return bsearch(key, arr->items, arr->len, arr->isize, fn);
 }
@@ -180,8 +183,9 @@ bunlist *bunlist_subarr(bunlist *arr, usize start, usize end, bool clone)
 	u8 *new_items = NULL;
 	bunlist *dst = NULL;
 	if (clone) {
-		dst = bunlist_create_ex(arr->isize, (end + 1 - start), arr->incr,
-				       arr->mult, false, arr->free_fn);
+		dst = bunlist_create_ex(arr->isize, (end + 1 - start),
+					arr->incr, arr->mult, false,
+					arr->free_fn);
 		bunlist_resize(dst, dst->cap);
 		memcpy(dst->items, arr->items + (arr->isize * start),
 		       arr->isize * (end + 1 - start));
@@ -189,8 +193,9 @@ bunlist *bunlist_subarr(bunlist *arr, usize start, usize end, bool clone)
 	} else {
 		// u8 *dest = (u8 *)(arr->items + arr->isize * (i));
 		new_items = (u8 *)(arr->items + (arr->isize * start));
-		dst = bunlist_create_ex(arr->isize, (end + 1 - start), arr->incr,
-				       arr->mult, true, arr->free_fn);
+		dst = bunlist_create_ex(arr->isize, (end + 1 - start),
+					arr->incr, arr->mult, true,
+					arr->free_fn);
 		dst->len = dst->cap;
 		dst->items = new_items;
 	}
