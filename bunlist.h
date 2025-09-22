@@ -8,7 +8,7 @@ typedef struct bunlist {
 	usize cap; /**< the number of items the list can hold */
 	u32 incr; /**< how much the list will be increased by when it reaches maxsize */
 	bool mult; /**< percentage - if true the increase value will be used as a multiplyer of the list capacity: newcap = cap * (incr/10) */
-	bool subarr; /**< set to true if this is a sublist */
+	bool sublist; /**< set to true if this is a sublist */
 	void (*free_fn)(
 		usize i,
 		void *itm); /**< NULL or function to be called on item removal */

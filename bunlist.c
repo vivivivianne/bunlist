@@ -18,10 +18,10 @@ bunlist *bunlist_create(usize isize, usize cap,
 }
 
 bunlist *bunlist_create_ex(usize isize, usize cap, u32 incr, bool mult,
-			   bool subarr, void (*free_fn)(usize i, void *data))
+			   bool sublist, void (*free_fn)(usize i, void *data))
 {
 	bunlist *arr = malloc(sizeof(bunlist));
-	arr->subarr = subarr;
+	arr->sublist = sublist;
 	arr->isize = isize;
 	arr->len = 0;
 	arr->cap = cap;
@@ -178,7 +178,7 @@ void *bunlist_bsearch(bunlist *arr, void *key,
 	return bsearch(key, arr->items, arr->len, arr->isize, fn);
 }
 
-bunlist *bunlist_subarr(bunlist *arr, usize start, usize end, bool clone)
+bunlist *bunlist_sublist(bunlist *arr, usize start, usize end, bool clone)
 {
 	u8 *new_items = NULL;
 	bunlist *dst = NULL;
@@ -224,7 +224,7 @@ static void bunlist_chk_resize(bunlist *arr)
 /** \brief Updates the array len and reallocs the memory to fit the new capacity */
 static void bunlist_resize(bunlist *arr, usize newcap)
 {
-	if (!arr->subarr) {
+	if (!arr->sublist) {
 		arr->cap = newcap;
 		void *items = realloc(arr->items, arr->isize * arr->cap);
 		arr->items = items;
