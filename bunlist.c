@@ -60,13 +60,16 @@ bool bunlist_remove(bunlist *arr, usize i)
 		void *itm = bunlist_get(arr, i);
 		arr->free_fn(i, itm);
 	}
-	u8 *dest = (u8 *)(arr->items + arr->isize * (i));
-	u8 *src = (u8 *)arr->items + arr->isize * (i + 1);
-	usize size = (arr->isize * (arr->len - i));
-
+	if (i + 1 < arr->len) {
+		void *dest = arr->items + arr->isize * (i);
+		void *src = arr->items + arr->isize * (i + 1);
+		usize size = arr->isize * (arr->len - (i + 1));
+		memmove(dest, src, size);
+	} else {
+		void *dest = arr->items + arr->isize * (arr->len);
+		memset(dest, 0, arr->isize);
+	}
 	arr->len--;
-	memmove(dest, src, size);
-
 	return true;
 }
 
@@ -76,8 +79,8 @@ bool bunlist_remove_lazy(bunlist *arr, usize i)
 		return false;
 	}
 	--arr->len;
-	u8 *item_ptr = (u8 *)arr->items + i * arr->isize;
-	u8 *end_ptr = (u8 *)arr->items + arr->len * arr->isize;
+	void *item_ptr = arr->items + i * arr->isize;
+	void *end_ptr = arr->items + arr->len * arr->isize;
 	memcpy(item_ptr, end_ptr, arr->isize);
 
 	return true;
@@ -90,8 +93,8 @@ bool bunlist_insert(bunlist *arr, void *item, usize i)
 	}
 	bunlist_chk_resize(arr);
 
-	u8 *dest = (arr->items + arr->isize * (i + 1));
-	u8 *src = (arr->items + arr->isize * (i));
+	void *dest = (arr->items + arr->isize * (i + 1));
+	void *src = (arr->items + arr->isize * (i));
 	usize size = (arr->isize * (arr->len - i));
 
 	memcpy(dest, src, size);
@@ -180,7 +183,7 @@ void *bunlist_bsearch(bunlist *arr, void *key,
 
 bunlist *bunlist_sublist(bunlist *arr, usize start, usize end, bool clone)
 {
-	u8 *new_items = NULL;
+	void *new_items = NULL;
 	bunlist *dst = NULL;
 	if (clone) {
 		dst = bunlist_create_ex(arr->isize, (end + 1 - start),
@@ -191,8 +194,7 @@ bunlist *bunlist_sublist(bunlist *arr, usize start, usize end, bool clone)
 		       arr->isize * (end + 1 - start));
 		dst->len = dst->cap;
 	} else {
-		// u8 *dest = (u8 *)(arr->items + arr->isize * (i));
-		new_items = (u8 *)(arr->items + (arr->isize * start));
+		new_items = arr->items + (arr->isize * start);
 		dst = bunlist_create_ex(arr->isize, (end + 1 - start),
 					arr->incr, arr->mult, true,
 					arr->free_fn);
@@ -225,8 +227,8 @@ static void bunlist_chk_resize(bunlist *arr)
 static void bunlist_resize(bunlist *arr, usize newcap)
 {
 	if (!arr->sublist) {
+		void *items = realloc(arr->items, arr->isize * newcap);
 		arr->cap = newcap;
-		void *items = realloc(arr->items, arr->isize * arr->cap);
 		arr->items = items;
 	}
 }
